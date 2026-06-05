@@ -1,0 +1,54 @@
+:root {
+  --header-height: 56px;
+  --nav-height: 80px;
+}
+
+.app-layout {
+  display: flex;
+  min-height: 100dvh;
+  background: var(--bg-base);
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* --- THE FIX: Handle the wrapper layout --- */
+.app-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0; /* Prevents flex items from breaking layout bounds */
+  height: 100%;
+}
+
+/* Base Main Content (Mobile Default) */
+.app-main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  /* Space for fixed mobile header and bottom nav */
+  margin-top: var(--header-height);
+  padding-bottom: var(--nav-height); 
+  box-sizing: border-box;
+}
+
+/* --- DESKTOP VIEW ADJUSTMENTS (768px and up) --- */
+@media (min-width: 768px) {
+  /* 1. Hide mobile-only components */
+  .app-header,
+  .bottom-nav {
+    display: none !important;
+  }
+
+  /* 2. Shift the ENTIRE wrapper to the right to clear the desktop sidebar */
+  .app-content-wrapper {
+    margin-left: 240px; /* Matches your sidebar width */
+  }
+
+  /* 3. Reset main content constraints since header/nav are gone */
+  .app-main {
+    margin-top: 0;
+    padding-bottom: 0;
+    padding: 32px; /* Nicer padding for desktop screens */
+    height: 100dvh;
+  }
+}
