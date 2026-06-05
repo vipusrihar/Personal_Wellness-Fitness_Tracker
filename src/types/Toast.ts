@@ -1,5 +1,5 @@
 export interface Toast {
   id: number;
   message: string;
-  type: "info" | "success" | "warning" | "achievement";
+  type: "info" | "success" | "warning" | "achievement" | "error";
 }
