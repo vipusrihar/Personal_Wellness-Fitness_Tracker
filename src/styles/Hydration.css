@@ -1,0 +1,77 @@
+.hydration-hero {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.hydration-stats {
+  flex: 1;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.h-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.h-stat:last-child {
+  border-bottom: none;
+}
+
+.h-val {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.h-pct-bar {
+  margin-top: 4px;
+}
+
+.quick-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.quick-btn {
+  font-size: 0.85rem;
+  padding: 10px 16px;
+}
+
+.custom-add {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.water-log {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.water-entry {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+}
+
+.water-icon {
+  font-size: 1.2rem;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
