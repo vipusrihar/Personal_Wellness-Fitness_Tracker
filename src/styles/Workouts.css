@@ -1,0 +1,71 @@
+.exercise-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.exercise-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 8px 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  font-size: 0.82rem;
+  transition: var(--transition);
+  cursor: pointer;
+  text-align: left;
+  gap: 2px;
+}
+
+.exercise-chip:hover {
+  border-color: var(--accent-2);
+  background: rgba(104, 211, 145, 0.08);
+}
+
+.exercise-chip strong {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.exercise-chip span {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.workout-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.workout-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.workout-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+}
+
+.workout-cat-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.workout-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.workout-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 3px;
+}

@@ -1,0 +1,95 @@
+.cal-summary {}
+
+.cal-numbers {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.cal-slash {
+    font-size: 2rem;
+    color: var(--text-muted);
+}
+
+.cal-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cal-search {
+    max-width: 320px;
+}
+
+.cat-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.cat-chips .chip {
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.cat-chips .chip:hover {
+    border-color: var(--accent-3);
+    color: var(--accent-3);
+}
+
+.entries-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.entry-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.entry-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.entry-cat-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.entry-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 160px;
+}
+
+.entry-meta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.entry-right {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.entry-cal {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--accent-3);
+    font-size: 0.95rem;
+    margin-right: 6px;
+}

@@ -1,0 +1,282 @@
+.dashboard-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.streak-pill {
+    background: rgba(249, 115, 22, .15);
+    border: 1px solid rgba(249, 115, 22, .35);
+    color: var(--accent-3);
+    box-shadow: 0 0 20px rgba(249, 115, 22, .08);
+}
+
+.quote-card {
+    margin-bottom: 24px;
+    border-left: 4px solid var(--accent-1);
+    background: linear-gradient(90deg, rgba(34, 197, 94, .05), transparent);
+
+}
+
+.quote-text {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    font-style: italic;
+    margin-bottom: 8px;
+}
+
+.quote-author {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.rings-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+    .rings-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.ring-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+@media (max-width: 600px) {
+    .ring-card {
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 340px) {
+    .ring-card {
+        flex-direction: column;
+    }
+}
+
+.ring-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ring-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.ring-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+}
+
+.ring-value {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.ring-value span {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+.ring-link {
+    font-size: 0.8rem;
+    color: var(--accent-1);
+    margin-top: 6px;
+    display: block;
+}
+
+.ring-link:hover {
+    text-decoration: underline;
+}
+
+.bmi-card {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 0;
+}
+
+.bmi-left {
+    min-width: 120px;
+}
+
+.bmi-value {
+    font-size: 2.8rem;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.bmi-right {
+    flex: 1;
+    min-width: 180px;
+}
+
+.bmi-suggestion {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 10px;
+}
+
+.badge-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 8px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    transition: var(--transition);
+    cursor: default;
+}
+
+.badge-item:hover {
+
+    transform:
+        translateY(-2px);
+
+    border-color:
+        var(--border-accent);
+
+}
+
+.badge-item.unlocked {
+
+    background:
+        rgba(139, 92, 246, .12);
+
+    border-color:
+        rgba(139, 92, 246, .30);
+
+    box-shadow:
+        0 0 20px rgba(139, 92, 246, .08);
+
+}
+
+.badge-item.locked {
+    opacity: 0.35;
+    filter: grayscale(1);
+}
+
+.badge-icon {
+    font-size: 1.5rem;
+}
+
+.badge-label {
+    font-size: 0.65rem;
+    text-align: center;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--text-secondary);
+}
+
+.recent-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.recent-item:last-child {
+    border-bottom: none;
+}
+
+.recent-name {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.recent-meta {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.recent-val {
+
+    font-family:
+        var(--font-display);
+
+    font-size:
+        1rem;
+
+    font-weight:
+        700;
+
+    color:
+        var(--accent-3);
+
+}
+
+.page-title,
+.streak-pill,
+.stat-icon,
+.bmi-suggestion {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-title {
+
+    padding-bottom: 8px;
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+.greeting-icon {
+    display: inline-flex;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.stat-icon {
+
+    font-size:
+        1.5rem;
+
+    color:
+        var(--accent-1);
+
+}
+
+.section-title svg {
+    font-size: 1.2rem;
+}
+
+.streak-pill svg {
+    font-size: 1.2rem;
+}
+
+.suggestion-icon {
+    flex-shrink: 0;
+}

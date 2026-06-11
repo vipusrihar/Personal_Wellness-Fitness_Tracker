@@ -1,0 +1,68 @@
+.timer-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+}
+
+.timer-display {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-controls {
+  display: flex;
+  gap: 12px;
+}
+
+.countdown-setup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.time-inputs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.time-inputs input {
+  width: 70px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  padding: 8px 4px;
+}
+
+.time-colon {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.time-labels {
+  display: flex;
+  gap: 60px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.countdown-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.countdown-bar {
+  width: 200px;
+}
