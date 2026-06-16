@@ -6,6 +6,7 @@ import { useAchievement } from '../contexts/AchievementContext';
 import { useUserProfile } from '../contexts/UserProfileContext';
 import { hydrationService } from '../services/hydrationService';
 import ProgressRing from '../components/ProgressiveRing';
+import { MdWaterDrop } from 'react-icons/md';
 
 // Interface for individual water logs
 interface HydrationEntry {
@@ -47,7 +48,12 @@ export default function Hydration() {
       return
     }
     await hydrationService.add(user.id, +amount)
-    addToast(`+${amount}ml logged! 💧`, 'success')
+    addToast(
+      <span className="flex items-center gap-1">
+        +{amount}ml logged! <MdWaterDrop />
+      </span>,
+      'success'
+    );
     if (total + +amount >= goal) await unlockAchievement(user.id)
     setCustom('');
     setError('')
@@ -103,7 +109,7 @@ export default function Hydration() {
         <div className="quick-buttons">
           {QUICK_AMOUNTS.map(a => (
             <button key={a} className="quick-btn btn btn-secondary" onClick={() => addWater(a)}>
-              💧 {a}ml
+              <MdWaterDrop /> {a}ml
             </button>
           ))}
         </div>
@@ -126,7 +132,7 @@ export default function Hydration() {
           <div className="water-log">
             {entries.slice().reverse().map(e => (
               <div key={e.id} className="water-entry">
-                <div className="water-icon">💧</div>
+                <div className="water-icon"><MdWaterDrop /></div>
                 <div>
                   <div style={{ fontWeight: 500 }}>{e.amount}ml</div>
                   <div className="text-muted text-sm">{new Date(e.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</div>

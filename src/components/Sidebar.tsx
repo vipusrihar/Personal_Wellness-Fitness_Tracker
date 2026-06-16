@@ -4,19 +4,13 @@ import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
 
 import {
-  FiHome,
-  FiActivity,
-  FiDroplet,
-  FiTrendingUp,
-  FiUser,
-  FiSettings,
-  FiLogOut,
-  FiMoon,
-  FiSun
+  FiHome, FiActivity, FiDroplet, FiTrendingUp,
+  FiUser, FiSettings, FiLogOut, FiMoon, FiSun
 } from 'react-icons/fi'
 import { GiWeightLiftingUp } from 'react-icons/gi'
 
 import '../styles/Sidebar.css'
+import { MdWhatshot } from 'react-icons/md';
 
 const navItems = [
   { to: '/dashboard', icon: <FiHome />, label: 'Dashboard' },
@@ -51,7 +45,6 @@ export default function Sidebar() {
 
           <div>
             <div className="logo-title">FitTrack</div>
-            <div className="logo-sub">Pro</div>
           </div>
 
         </div>
@@ -77,7 +70,7 @@ export default function Sidebar() {
 
             {streak > 0 && (
               <span className="streak-badge">
-                🔥 {streak}
+                <MdWhatshot/> {streak}
               </span>
             )}
 
