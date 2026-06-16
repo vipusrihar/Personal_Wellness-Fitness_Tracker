@@ -4,7 +4,7 @@ import type { Toast } from '../types/Toast'
 
 interface ToastContextValue {
     toasts: Toast[]
-    addToast: (message: string, type?: Toast["type"]) => void
+    addToast: (message: ReactNode, type?: Toast["type"]) => void
     removeToast: (id: number) => void
 }
 
@@ -13,7 +13,7 @@ const ToastContext = createContext<ToastContextValue | null>(null)
 export function ToastProvider({ children }: { children: ReactNode }) {
     const [toasts, setToasts] = useState<Toast[]>([])
 
-    const addToast = useCallback((message: string, type: Toast["type"] = "info") => {
+    const addToast = useCallback((message: ReactNode, type: Toast["type"] = "info") => {
         const id = Date.now()
         setToasts(t => [...t, { id, message, type }])
 
