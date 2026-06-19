@@ -1,39 +1,61 @@
-import { NavLink } from 'react-router-dom'
+import { useState } from 'react'
+import { NavLink, useLocation } from 'react-router-dom'
 import '../styles/BottomNav.css'
 import {
   FiHome,
   FiActivity,
   FiDroplet,
-  FiTrendingUp,
+  FiMoreHorizontal,
 } from 'react-icons/fi'
 import { GiWeightLiftingUp } from 'react-icons/gi'
+import MoreSheet from './MoreSheet'
 
-// Cut down to the 5 absolute essentials for daily usage
 const navItems = [
   { to: '/dashboard', icon: <FiHome />, label: 'Home' },
   { to: '/calories', icon: <FiActivity />, label: 'Calories' },
-  { to: '/hydration', icon: <FiDroplet />, label: 'Water' }, // Shortened label for layout breathing room
+  { to: '/hydration', icon: <FiDroplet />, label: 'Water' },
   { to: '/workouts', icon: <GiWeightLiftingUp />, label: 'Workouts' },
-  { to: '/progress', icon: <FiTrendingUp />, label: 'Progress' },
-  // Option: Swap progress for a "More" tab if Profile/Settings must live in the nav
-  // { to: '/more', icon: <FiMenu />, label: 'More' } 
 ]
 
+// Pages that live inside the More sheet — used to highlight the More tab
+// when the user is on one of these routes
+const MORE_ROUTES = ['/progress', '/profile', '/settings']
+
 export default function BottomNav() {
+  const [sheetOpen, setSheetOpen] = useState(false)
+  const location = useLocation()
+
+  const moreIsActive = MORE_ROUTES.some(r => location.pathname.startsWith(r))
+
   return (
-    <nav className="bottom-nav">
-      {navItems.map(item => (
-        <NavLink 
-          key={item.to} 
-          to={item.to} 
-          className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+    <>
+      <nav className="bottom-nav">
+        {navItems.map(item => (
+          <NavLink
+            key={item.to}
+            to={item.to}
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+          >
+            <div className="icon-wrapper">{item.icon}</div>
+            <span className="nav-label">{item.label}</span>
+          </NavLink>
+        ))}
+
+        {/* More tab — not a NavLink, just a button that opens the sheet */}
+        <button
+          className={`nav-item more-tab ${moreIsActive || sheetOpen ? 'active' : ''}`}
+          onClick={() => setSheetOpen(true)}
+          aria-label="More options"
+          aria-expanded={sheetOpen}
         >
           <div className="icon-wrapper">
-            {item.icon}
+            <FiMoreHorizontal />
           </div>
-          <span className="nav-label">{item.label}</span>
-        </NavLink>
-      ))}
-    </nav>
+          <span className="nav-label">More</span>
+        </button>
+      </nav>
+
+      <MoreSheet open={sheetOpen} onClose={() => setSheetOpen(false)} />
+    </>
   )
 }

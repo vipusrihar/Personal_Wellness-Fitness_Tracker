@@ -1,32 +1,36 @@
 import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import '../styles/Home.css'
+import type { IconType } from 'react-icons'
+import { LuUtensils, LuDroplet, LuDumbbell, LuTrophy, LuCloudOff, LuFootprints, LuLeaf } from "react-icons/lu";
+import { MdOutlineWbTwilight, MdOutlineBed, MdOutlineInsertChartOutlined } from "react-icons/md";
+import "../styles/Home.css";
+import { BsHeartPulseFill } from 'react-icons/bs';
 
 interface Feature {
-    icon: string
+    icon: IconType // Changed from string to IconType for strict type safety
     title: string
     desc: string
 }
 
 interface Tip {
-    icon: string
+    icon: IconType
     tip: string
 }
 
 const features: Feature[] = [
-    { icon: '🥗', title: 'Calorie Tracking', desc: 'Log meals and monitor daily nutrition with smart auto-categorization and macro breakdown charts.' },
-    { icon: '💧', title: 'Hydration Goals', desc: 'Track water intake with beautiful progress rings and one-tap quick-add buttons throughout the day.' },
-    { icon: '💪', title: 'Workout Logger', desc: 'Record exercises with a built-in stopwatch, rest timer, and set-by-set volume tracking per muscle group.' },
-    { icon: '📊', title: 'Progress Analytics', desc: 'Visualize your journey with detailed trend charts, weekly summaries, and personal record tracking.' },
-    { icon: '🏆', title: 'Achievements', desc: 'Unlock badges, maintain streaks, and celebrate milestones to stay motivated every single day.' },
-    { icon: '📱', title: 'Offline First', desc: 'Works without internet. Your private health data stays locked on your device — never uploaded.' },
+    { icon: LuUtensils, title: 'Calorie Tracking', desc: 'Log meals and monitor daily nutrition with smart auto-categorization and macro breakdown charts.' },
+    { icon: LuDroplet, title: 'Hydration Goals', desc: 'Track water intake with beautiful progress rings and one-tap quick-add buttons throughout the day.' },
+    { icon: LuDumbbell, title: 'Workout Logger', desc: 'Record exercises with a built-in stopwatch, rest timer, and set-by-set volume tracking per muscle group.' },
+    { icon: MdOutlineInsertChartOutlined, title: 'Progress Analytics', desc: 'Visualize your journey with detailed trend charts, weekly summaries, and personal record tracking.' },
+    { icon: LuTrophy, title: 'Achievements', desc: 'Unlock badges, maintain streaks, and celebrate milestones to stay motivated every single day.' },
+    { icon: LuCloudOff, title: 'Offline First', desc: 'Works without internet. Your private health data stays locked on your device — never uploaded.' },
 ]
 
 const tips: Tip[] = [
-    { icon: '🌅', tip: 'Drink water first thing in the morning to kickstart your metabolism and rehydrate after sleep.' },
-    { icon: '🥦', tip: 'Fill half your plate with vegetables at every meal for optimal nutrition and satiety signals.' },
-    { icon: '😴', tip: '7–9 hours of sleep is essential for muscle recovery, hormone balance, and weight management.' },
-    { icon: '🚶', tip: '10,000 steps a day can significantly reduce cardiovascular disease risk and improve mood.' },
+    { icon: MdOutlineWbTwilight, tip: 'Drink water first thing in the morning to kickstart your metabolism and rehydrate after sleep.' },
+    { icon: LuLeaf, tip: 'Fill half your plate with vegetables at every meal for optimal nutrition and satiety signals.' },
+    { icon: MdOutlineBed, tip: '7–9 hours of sleep is essential for muscle recovery, hormone balance, and weight management.' },
+    { icon: LuFootprints, tip: '10,000 steps a day can significantly reduce cardiovascular disease risk and improve mood.' },
 ]
 
 const photoStrip = [
@@ -326,17 +330,22 @@ export default function Home() {
                         seeing how you're doing over time.
                     </p>
                     <div className="features-grid">
-                        {features.map((f, idx) => (
-                            <div
-                                key={f.title}
-                                className="feat-card"
-                                style={{ animationDelay: `${idx * 0.07}s` } as React.CSSProperties}
-                            >
-                                <div className="feat-icon-wrap">{f.icon}</div>
-                                <h3>{f.title}</h3>
-                                <p>{f.desc}</p>
-                            </div>
-                        ))}
+                        {features.map((f, idx) => {
+                            const IconComponent = f.icon;
+                            return (
+                                <div
+                                    key={f.title}
+                                    className="feat-card"
+                                    style={{ animationDelay: `${idx * 0.07}s` } as React.CSSProperties}
+                                >
+                                    <div className="feat-icon-wrap">
+                                        <IconComponent size={24} className="text-violet-500" />
+                                    </div>
+                                    <h3>{f.title}</h3>
+                                    <p>{f.desc}</p>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </section>
@@ -406,16 +415,21 @@ export default function Home() {
                     <p className="eyebrow">Healthy Living</p>
                     <h2 className="section-h">Science-backed tips</h2>
                     <div className="tips-bento">
-                        {tips.map((t, idx) => (
-                            <div
-                                key={t.tip}
-                                className="tip-card"
-                                style={{ animationDelay: `${idx * 0.08}s` } as React.CSSProperties}
-                            >
-                                <span className="tip-icon">{t.icon}</span>
-                                <p>{t.tip}</p>
-                            </div>
-                        ))}
+                        {tips.map((t, idx) => {
+                            const TipIconComponent = t.icon;
+                            return (
+                                <div
+                                    key={t.tip}
+                                    className="tip-card"
+                                    style={{ animationDelay: `${idx * 0.08}s` } as React.CSSProperties}
+                                >
+                                    <span className="tip-icon">
+                                        <TipIconComponent size={22} className="text-blue-400" />
+                                    </span>
+                                    <p>{t.tip}</p>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </section>
@@ -441,7 +455,7 @@ export default function Home() {
             </section>
 
             <footer className="home-footer">
-                <p>© 2026 FitTrack · Built with ❤️ for a healthier world</p>
+                <p>© 2026 FitTrack · Built with <BsHeartPulseFill/> for a healthier world</p>
             </footer>
         </div>
     )

@@ -304,12 +304,28 @@
 
 @media (max-width: 900px) {
   .hero-right {
-    height: 380px;
-    max-width: 440px;
+    height: auto;        /* no fixed height */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    max-width: 420px;
     margin: 0 auto;
   }
-}
 
+  /* All cards back to normal flow */
+  .float-card {
+    position: static !important;
+    width: auto !important;
+    animation: none;     /* no float jitter */
+    --r: 0deg;           /* no tilt */
+  }
+
+  /* Hide lower-priority cards */
+  .fc2, .fc3 { display: none; }
+
+  /* fc1 and fc3 each fill one column */
+  .fc1, .fc4 { width: 100% !important; }
+}
 .float-card {
   position: absolute;
   background: var(--bg-elevated);
