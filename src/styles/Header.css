@@ -17,28 +17,19 @@
 
 @media (prefers-color-scheme: dark) {
   .app-header {
-    background: rgba(15, 23, 42, 0.85);
+    background:  var(--bg-elevated);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
-}
-
-.header-avatar {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  object-fit: cover;
-  cursor: pointer;
-  border: 2px solid var(--nav-active, #3b82f6);
 }
 
 .page-title {
   font-size: 1.1rem;
   font-weight: 600;
   color: inherit;
-  margin: 0;
+  margin: 12px;
 }
 
-.settings-btn {
+.theme-toggle-btn {
   background: none;
   border: none;
   font-size: 1.25rem;
@@ -48,9 +39,30 @@
   align-items: center;
   padding: 8px;
   border-radius: 50%;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
 
-.settings-btn:active {
-  background: rgba(0, 0, 0, 0.05);
+.theme-toggle-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--text-primary);
+}
+
+.theme-toggle-btn:active {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .theme-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .theme-toggle-btn:active {
+    background: rgba(255, 255, 255, 0.12);
+  }
+}
+
+@media (min-width: 768px) {
+  .app-header {
+    display: none;
+  }
 }

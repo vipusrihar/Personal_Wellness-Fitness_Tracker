@@ -4,7 +4,6 @@ import type { IconType } from 'react-icons'
 import { LuUtensils, LuDroplet, LuDumbbell, LuTrophy, LuCloudOff, LuFootprints, LuLeaf } from "react-icons/lu";
 import { MdOutlineWbTwilight, MdOutlineBed, MdOutlineInsertChartOutlined } from "react-icons/md";
 import "../styles/Home.css";
-import '../styles/Home.css'
 import { BsHeartPulseFill } from 'react-icons/bs';
 
 interface Feature {
