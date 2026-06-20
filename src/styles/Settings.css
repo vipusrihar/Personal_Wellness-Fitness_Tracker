@@ -73,3 +73,51 @@
     color: var(--text-primary);
     font-weight: 500;
 }
+
+/* Page Layout & Card Spacing  */
+
+/* Spacing layout for the entire settings container */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    /* Creates an automatic, uniform gap between every card section */
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+/* Explicit fallback if you want to keep using .mb-3 and .mt-3 structures */
+.mb-1 {
+    margin-bottom: 0.25rem;
+}
+
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+/* Section Title layout formatting */
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+/* Base Card structure if not defined globally */
+.card {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md, 12px);
+    padding: 1.5rem;
+}

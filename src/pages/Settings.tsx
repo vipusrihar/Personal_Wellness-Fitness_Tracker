@@ -1,14 +1,8 @@
 import { useState } from 'react'
 import '../styles/Settings.css'
 import {
-  FiSun,
-  FiMoon,
-  FiDownload,
-  FiTrash2,
-  FiSettings,
-  FiWifi,
-  FiDatabase,
-  FiInfo
+  FiSun, FiMoon, FiDownload, FiTrash2, FiSettings,
+  FiWifi, FiDatabase, FiInfo
 } from 'react-icons/fi'
 import { exportData, resetData } from '../services/dataService'
 import { useAuth } from '../contexts/AuthContext'
@@ -16,7 +10,6 @@ import { useTheme } from '../contexts/ThemeContext'
 import { useToast } from '../contexts/ToastContext'
 
 export default function Settings() {
-  // Corrected structural types context destructuring 
   const { user, isOnline } = useAuth() as { user: any; isOnline: boolean };
   const { theme, toggleTheme } = useTheme();
   const { addToast } = useToast()
@@ -64,15 +57,18 @@ export default function Settings() {
 
   return (
     <div className="page-container fade-in">
-      <div className="flex items-center gap-2 mb-1">
-        <FiSettings className="text-xl" />
-        <h1 className="page-title" style={{ margin: 0 }}>Settings</h1>
+      {/* Header Block */}
+      <div>
+        <div className="flex items-center gap-2 mb-1">
+          <FiSettings className="text-xl" />
+          <h1 className="page-title" style={{ margin: 0 }}>Settings</h1>
+        </div>
+        <p className="page-subtitle">Customize your FitTrack Pro experience</p>
       </div>
-      <p className="page-subtitle mb-4">Customize your FitTrack Pro experience</p>
 
       {/* Appearance */}
-      <div className="card mb-3">
-        <div className="section-title mb-3" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div className="card">
+        <div className="section-title mb-3">
           {theme === 'dark' ? <FiMoon /> : <FiSun />} Appearance
         </div>
         <div className="settings-row">
@@ -80,11 +76,7 @@ export default function Settings() {
             <div className="settings-label">Theme</div>
             <div className="settings-desc">Switch between dark and light mode</div>
           </div>
-          <button
-            className="btn btn-secondary"
-            onClick={toggleTheme}
-            style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-          >
+          <button className="btn btn-secondary flex items-center gap-2" onClick={toggleTheme}>
             {theme === 'dark' ? <FiSun size={16} /> : <FiMoon size={16} />}
             <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
           </button>
@@ -92,18 +84,15 @@ export default function Settings() {
       </div>
 
       {/* Network */}
-      <div className="card mb-3">
-        <div className="section-title mb-3" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      <div className="card">
+        <div className="section-title mb-3">
           <FiWifi /> Network & Sync
         </div>
         <div className="settings-row">
           <div>
             <div className="settings-label">Connection Status</div>
-            <div className="settings-desc" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-              <span
-                className={`online-dot ${isOnline ? 'online' : 'offline'}`}
-                style={{ display: 'inline-block', marginRight: '8px', borderRadius: '50%', width: '8px', height: '8px' }}
-              />
+            <div className="settings-desc flex items-center">
+              <span className={`online-dot ${isOnline ? 'online' : 'offline'}`} />
               {isOnline ? 'Connected to internet' : 'Working offline — data syncs when reconnected'}
             </div>
           </div>
@@ -117,9 +106,9 @@ export default function Settings() {
         </div>
       </div>
 
-      {/* Data */}
-      <div className="card mb-3">
-        <div className="section-title mb-3" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+      {/* Data Management */}
+      <div className="card">
+        <div className="section-title mb-3">
           <FiDatabase /> Data Management
         </div>
         <div className="settings-row">
@@ -128,16 +117,16 @@ export default function Settings() {
             <div className="settings-desc">Download all your fitness data as a JSON file</div>
           </div>
           <button
-            className="btn btn-secondary"
+            className="btn btn-secondary flex items-center gap-2"
             onClick={handleExport}
-            disabled={exporting}
-            style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-          >
+            disabled={exporting}>
             <FiDownload size={16} />
             <span>{exporting ? 'Exporting...' : 'Export'}</span>
           </button>
         </div>
+
         <div className="divider mt-3 mb-3" />
+
         <div className="settings-row">
           <div>
             <div className="settings-label danger-text">Reset All Data</div>
@@ -145,23 +134,17 @@ export default function Settings() {
           </div>
           {!confirmReset ? (
             <button
-              className="btn btn-danger-outline"
-              onClick={() => setConfirmReset(true)}
-              style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-            >
+              className="btn btn-danger-outline flex items-center gap-2"
+              onClick={() => setConfirmReset(true)}>
               <FiTrash2 size={16} />
               <span>Reset</span>
             </button>
           ) : (
-            <div className="confirm-btns" style={{ display: 'flex', gap: '8px' }}>
+            <div className="confirm-btns">
               <button className="btn btn-ghost btn-sm" onClick={() => setConfirmReset(false)}>
                 Cancel
               </button>
-              <button
-                className="btn btn-danger btn-sm"
-                onClick={handleReset}
-                disabled={resetting}
-              >
+              <button className="btn btn-danger btn-sm" onClick={handleReset} disabled={resetting}>
                 {resetting ? 'Resetting...' : 'Confirm Reset'}
               </button>
             </div>
@@ -171,7 +154,7 @@ export default function Settings() {
 
       {/* About */}
       <div className="card">
-        <div className="section-title mb-3" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div className="section-title mb-3">
           <FiInfo /> About
         </div>
         <div className="about-row"><span>Version</span><span>1.0.0</span></div>
