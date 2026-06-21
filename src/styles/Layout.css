@@ -16,7 +16,8 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  min-width: 0; /* Prevents flex items from breaking layout bounds */
+  min-width: 0;
+  /* Prevents flex items from breaking layout bounds */
   height: 100%;
 }
 
@@ -27,12 +28,13 @@
   padding: 20px;
   /* Space for fixed mobile header and bottom nav */
   margin-top: var(--header-height);
-  padding-bottom: var(--nav-height); 
+  padding-bottom: var(--nav-height);
   box-sizing: border-box;
 }
 
 /* --- DESKTOP VIEW ADJUSTMENTS (768px and up) --- */
 @media (min-width: 768px) {
+
   /* 1. Hide mobile-only components */
   .app-header,
   .bottom-nav {
@@ -41,14 +43,16 @@
 
   /* 2. Shift the ENTIRE wrapper to the right to clear the desktop sidebar */
   .app-content-wrapper {
-    margin-left: 240px; /* Matches your sidebar width */
+    margin-left: var(--sidebar-width, 240px);
+    /* Fallback to 240px just in case */
   }
 
   /* 3. Reset main content constraints since header/nav are gone */
   .app-main {
     margin-top: 0;
     padding-bottom: 0;
-    padding: 32px; /* Nicer padding for desktop screens */
+    padding: 32px;
+    /* Nicer padding for desktop screens */
     height: 100dvh;
   }
 }

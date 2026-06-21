@@ -132,7 +132,7 @@ export default function Calories() {
           <p className="page-subtitle">Track your daily nutrition</p>
         </div>
         <button
-          className="btn btn-primary btn-sm"
+          className="btn btn-primary btn-sm btn-add-action"
           onClick={() => {
             setShowForm(true);
             setEditItem(null);
@@ -140,7 +140,7 @@ export default function Calories() {
             setErrors({});
           }}
         >
-          <FiPlus size={16} />
+          <FiPlus size={20} />
           <span>Add Meal</span>
         </button>
       </div>
