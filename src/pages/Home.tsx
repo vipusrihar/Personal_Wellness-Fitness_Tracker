@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom'
 import type { IconType } from 'react-icons'
 import { LuUtensils, LuDroplet, LuDumbbell, LuTrophy, LuCloudOff, LuFootprints, LuLeaf } from "react-icons/lu";
 import { MdOutlineWbTwilight, MdOutlineBed, MdOutlineInsertChartOutlined } from "react-icons/md";
+import { FiSun, FiMoon } from 'react-icons/fi'
 import "../styles/Home.css";
 import { BsHeartPulseFill } from 'react-icons/bs';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface Feature {
     icon: IconType // Changed from string to IconType for strict type safety
@@ -58,6 +60,7 @@ export default function Home() {
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const mouseRef = useRef({ x: 0, y: 0 })
     const animRef = useRef<number>(0)
+    const { theme, toggleTheme } = useTheme()
 
     // Animated particle canvas background
     useEffect(() => {
@@ -199,12 +202,20 @@ export default function Home() {
             <canvas ref={canvasRef} className="bg-canvas" />
 
             {/* NAV */}
+            {/* NAV */}
             <nav className="home-nav">
                 <div className="logo">
                     <div className="logo-dot" />
                     FitTrack
                 </div>
                 <div className="nav-links">
+                    <button
+                        className="btn-theme-toggle"
+                        onClick={toggleTheme}
+                        aria-label="Toggle theme"
+                    >
+                        {theme === 'dark' ? <FiSun size={18} /> : <FiMoon size={18} />}
+                    </button>
                     <Link to="/login" className="btn-ghost-nav">Sign In</Link>
                     <Link to="/register" className="btn-nav-cta">Get Started →</Link>
                 </div>
@@ -455,7 +466,7 @@ export default function Home() {
             </section>
 
             <footer className="home-footer">
-                <p>© 2026 FitTrack · Built with <BsHeartPulseFill/> for a healthier world</p>
+                <p>© 2026 FitTrack · Built with <BsHeartPulseFill /> for a healthier world</p>
             </footer>
         </div>
     )
