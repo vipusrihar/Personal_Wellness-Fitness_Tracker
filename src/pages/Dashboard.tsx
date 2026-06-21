@@ -39,7 +39,6 @@ export default function Dashboard() {
     const { profile, streak, calculateBMI, getBMICategory } = useUserProfile()
     const { achievements } = useAchievement()
 
-    // Initialized with explicit types instead of 'never[]'
     const [calories, setCalories] = useState<Calorie[]>([])
     const [hydration, setHydration] = useState<HydrationItem[]>([])
     const [workouts, setWorkouts] = useState<WorkoutItem[]>([])
@@ -63,7 +62,6 @@ export default function Dashboard() {
             .catch(err => console.error("Error fetching dashboard data:", err))
     }, [user])
 
-    // Derived State Computations
     const totalCalories = calories.reduce((s, c) => s + (c.calories || 0), 0)
     const totalWater = hydration.reduce((s, h) => s + (h.amount || 0), 0)
 
@@ -77,7 +75,6 @@ export default function Dashboard() {
     const bmiCat = getBMICategory()
     const unlockedIds = new Set(achievements?.map(a => a.badgeId) || [])
 
-    // Helper functions for dynamic UI greetings
     function getGreeting(): string {
         const h = new Date().getHours()
         if (h < 12) return 'morning'
@@ -97,10 +94,10 @@ export default function Dashboard() {
             <div className="dashboard-header">
                 <div>
                     <h1 className="page-title">
-                        Good {getGreeting()}, {user?.username || 'Guest'}
-                        <span className="greeting-icon">
+                        Good {getGreeting()},
+                        <span className="greeting-name"> {user?.username || 'Guest'} <span className="greeting-icon">
                             {getGreetingIcon()}
-                        </span>
+                        </span></span>
                     </h1>
                     <p className="page-subtitle">
                         {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
@@ -125,12 +122,12 @@ export default function Dashboard() {
             {/* Summary rings */}
             <div className="rings-row">
                 <div className="ring-card card">
-                    <ProgressRing size={100} strokeWidth={9} percent={calPct} color="#f6ad55">
+                    <ProgressRing size={100} strokeWidth={9} percent={calPct} color="var(--accent-3)">
                         <div className="ring-inner">
-                            <div style={{ fontSize: '1rem', fontWeight: 700, fontFamily: 'var(--font-display)' }}>
+                            <div className="ring-inner-value">
                                 {Math.round(calPct)}%
                             </div>
-                            <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>CALS</div>
+                            <div className="ring-inner-unit"> CALS  </div>
                         </div>
                     </ProgressRing>
                     <div className="ring-info">
@@ -143,12 +140,12 @@ export default function Dashboard() {
                 </div>
 
                 <div className="ring-card card">
-                    <ProgressRing size={100} strokeWidth={9} percent={waterPct} color="#63b3ed">
+                    <ProgressRing size={100} strokeWidth={9} percent={waterPct} color="var(--accent-2)">
                         <div className="ring-inner">
-                            <div style={{ fontSize: '1rem', fontWeight: 700, fontFamily: 'var(--font-display)' }}>
+                            <div className="ring-inner-value">
                                 {Math.round(waterPct)}%
                             </div>
-                            <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>H₂O</div>
+                            <div className="ring-inner-unit">H₂O</div>
                         </div>
                     </ProgressRing>
                     <div className="ring-info">
@@ -161,12 +158,12 @@ export default function Dashboard() {
                 </div>
 
                 <div className="ring-card card">
-                    <ProgressRing size={100} strokeWidth={9} percent={Math.min(100, (workouts.length / 3) * 100)} color="#68d391">
+                    <ProgressRing size={100} strokeWidth={9} percent={Math.min(100, (workouts.length / 3) * 100)} color="var(--accent-1)">
                         <div className="ring-inner">
-                            <div style={{ fontSize: '1.2rem', fontWeight: 700, fontFamily: 'var(--font-display)' }}>
+                            <div className="ring-inner-value ring-inner-value-lg">
                                 {workouts.length}
                             </div>
-                            <div style={{ fontSize: '0.6rem', color: 'var(--text-muted)' }}>SETS</div>
+                            <div className="ring-inner-unit">SETS</div>
                         </div>
                     </ProgressRing>
                     <div className="ring-info">

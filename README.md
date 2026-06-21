@@ -1,26 +1,26 @@
-# FitTrack — Personal Wellness & Fitness Tracker
+# FitTrack - Personal Wellness & Fitness Tracker
 
-A fully offline-capable, PWA-ready personal wellness and fitness tracking application built with React, TypeScript, and Vite. FitTrack Pro helps users monitor workouts, nutrition, hydration, body measurements, and daily streaks — all stored locally in the browser using IndexedDB via Dexie.js.
+A fully offline-capable, PWA-ready personal wellness and fitness tracking application built with React, TypeScript, and Vite. FitTrack Pro helps users monitor workouts, nutrition, hydration, body measurements, and daily streaks - all stored locally in the browser using IndexedDB via Dexie.js.
 
 
 
 ## Features
 
-- **User Authentication** — Local registration and login with form validation; sessions persist via IndexedDB
-- **Dashboard** — Daily overview of calories, hydration, active streak, and a motivational quote fetched from an external API (with local fallback)
-- **Calorie Tracker** — Log meals by category (Breakfast, Lunch, Dinner, Snack), edit or delete entries, and track progress toward a custom daily calorie goal
-- **Hydration Tracker** — Log water intake in configurable increments and visualize daily progress toward a personal water goal
-- **Workout Logger** — Search exercises by name, log sets/reps/duration, and maintain a complete history
-- **Progress Tracker** — Record body measurements (weight, height, BMI) over time and view trends with interactive Recharts graphs
-- **Achievement System** — Unlock badges automatically as milestones are reached (first workout, hydration goal met, streak milestones, etc.)
-- **Streak Tracking** — Daily login/activity streaks with automatic calculation and badge rewards at 3, 7, and 30-day marks
-- **User Profile** — Set personal details (age, gender, weight, height, fitness goal) and customise calorie and water goals
-- **Settings** — Export all personal data as JSON, reset data, and toggle app preferences
-- **Dark / Light Theme** — System-aware theme toggle persisted across sessions
-- **Responsive Layout** — Sidebar navigation on desktop, bottom tab bar on mobile
-- **PWA Support** — Installable as a progressive web app via `vite-plugin-pwa`
-- **Offline First** — All data lives in the browser's IndexedDB; no backend required
-- **Sync Queue** — Infrastructure for future server sync (queued operations stored locally)
+- **User Authentication** - Local registration and login with form validation; sessions persist via IndexedDB
+- **Dashboard** - Daily overview of calories, hydration, active streak, and a motivational quote fetched from an external API (with local fallback)
+- **Calorie Tracker** - Log meals by category (Breakfast, Lunch, Dinner, Snack), edit or delete entries, and track progress toward a custom daily calorie goal
+- **Hydration Tracker** - Log water intake in configurable increments and visualize daily progress toward a personal water goal
+- **Workout Logger** - Search exercises by name, log sets/reps/duration, and maintain a complete history
+- **Progress Tracker** - Record body measurements (weight, height, BMI) over time and view trends with interactive Recharts graphs
+- **Achievement System** - Unlock badges automatically as milestones are reached (first workout, hydration goal met, streak milestones, etc.)
+- **Streak Tracking** - Daily login/activity streaks with automatic calculation and badge rewards at 3, 7, and 30-day marks
+- **User Profile** - Set personal details (age, gender, weight, height, fitness goal) and customise calorie and water goals
+- **Settings** - Export all personal data as JSON, reset data, and toggle app preferences
+- **Dark / Light Theme** - System-aware theme toggle persisted across sessions
+- **Responsive Layout** - Sidebar navigation on desktop, bottom tab bar on mobile
+- **PWA Support** - Installable as a progressive web app via `vite-plugin-pwa`
+- **Offline First** - All data lives in the browser's IndexedDB; no backend required
+- **Sync Queue** - Infrastructure for future server sync (queued operations stored locally)
 
 
 ## Tech Stack
@@ -48,10 +48,8 @@ Personal_Wellness-Fitness_Tracker/
 │   └── icons.svg
 ├── src/
 │   ├── components/         # Reusable UI components
-│   │   ├── BottomNav.tsx   # Mobile bottom navigation bar
 │   │   ├── Header.tsx      # Page header with theme toggle
 │   │   ├── Layout.tsx      # Root layout (sidebar + header + outlet)
-│   │   ├── MoreSheet.tsx   # Bottom sheet for secondary nav items
 │   │   ├── ProgressBar.tsx # Reusable linear progress bar
 │   │   ├── ProgressiveRing.tsx # SVG circular progress ring
 │   │   ├── Sidebar.tsx     # Desktop sidebar navigation
@@ -121,7 +119,7 @@ Personal_Wellness-Fitness_Tracker/
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/Personal_Wellness-Fitness_Tracker.git
+git clone https://github.com/vipusrihar/Personal_Wellness-Fitness_Tracker.git
 cd Personal_Wellness-Fitness_Tracker
 
 # Install dependencies
@@ -197,17 +195,17 @@ No network backend is required. All CRUD operations are performed directly again
 
 The service layer (`src/services/`) provides a clean abstraction over the database and external APIs:
 
-- **`userService`** — Create accounts, find by username/email, validate credentials
-- **`profileService`** — Create, read, and update the user's profile and goal settings
-- **`calorieService`** — Add, read today's entries, read all entries, update, and delete calorie logs
-- **`hydrationService`** — Add, read today's hydration entries, and delete entries
-- **`workoutService`** — Add, read all workout records, and delete entries
-- **`measurementService`** — Add, read all body measurements, and delete entries
-- **`achievementService`** — Read unlocked achievements and unlock new ones (idempotent)
-- **`streakService`** — Calculate and update daily streaks; retrieve the current streak count
-- **`dataService`** — Orchestrate full data export (all tables) and full data reset
-- **`syncQueueService`** — Add, read, and remove queued sync operations for future backend integration
-- **`apiService`** — Fetch motivational quotes from `dummyjson.com` (cached for 24 hours) and provide a searchable exercise library (cached for 7 days); both fall back to local data on network failure
+- **`userService`** - Create accounts, find by username/email, validate credentials
+- **`profileService`** - Create, read, and update the user's profile and goal settings
+- **`calorieService`** - Add, read today's entries, read all entries, update, and delete calorie logs
+- **`hydrationService`** - Add, read today's hydration entries, and delete entries
+- **`workoutService`** - Add, read all workout records, and delete entries
+- **`measurementService`** - Add, read all body measurements, and delete entries
+- **`achievementService`** - Read unlocked achievements and unlock new ones (idempotent)
+- **`streakService`** - Calculate and update daily streaks; retrieve the current streak count
+- **`dataService`** - Orchestrate full data export (all tables) and full data reset
+- **`syncQueueService`** - Add, read, and remove queued sync operations for future backend integration
+- **`apiService`** - Fetch motivational quotes from `dummyjson.com` (cached for 24 hours) and provide a searchable exercise library (cached for 7 days); both fall back to local data on network failure
 
 
 ## Achievements & Badges

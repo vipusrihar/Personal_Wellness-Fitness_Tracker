@@ -621,6 +621,16 @@ h5 {
   }
 }
 
+/* ─── Desktop Modal Centering Fix ─────────────────────────── */
+@media (min-width: 768px) {
+  .modal {
+    /* The desktop sidebar is 240px wide. 
+       Adding half of that (120px) shifts the modal from the 
+       "viewport center" to the "content area center". */
+    margin-left: 120px;
+  }
+}
+
 .modal {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
@@ -808,7 +818,7 @@ h5 {
 
 /* ─── Select ────────────────────────────────────── */
 select option {
-  background: #1a1f2e;
+  background: var(--bg-elevated);
   color: var(--text-primary);
 }
 
@@ -822,4 +832,138 @@ select option {
 .badge-icon svg {
   width: 24px;
   height: 24px;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE PATCHES
+   Append to the end of your global tokens.css file
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─── Safe area support ──────────────────────────────────────
+   Add this once, near :root, so it's available everywhere */
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ─── Modal: bottom-sheet on mobile, respects safe area ──────
+   Replaces the existing .modal rule's missing mobile case */
+.modal {
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+@media (max-width: 480px) {
+  .modal {
+    padding: 24px 20px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    padding-bottom: calc(20px + var(--safe-bottom));
+    max-width: 100%;
+  }
+
+  .modal-overlay {
+    padding: 0;
+    padding-bottom: var(--safe-bottom);
+  }
+}
+
+/* ─── Toast: clears the fixed mobile header, respects safe area ─ */
+@media (max-width: 480px) {
+  .toast-container {
+    top: calc(56px + 12px + var(--safe-top));
+    right: 12px;
+    left: 12px;
+    max-width: none;
+  }
+}
+
+/* ─── Touch targets: enforce 44px minimum on mobile ──────────
+   Apple HIG / Material minimum tap target size */
+@media (max-width: 767px) {
+  .btn-icon {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .btn-sm {
+    min-height: 40px;
+  }
+
+  .chip {
+    min-height: 32px;
+  }
+}
+
+/* ─── Form inputs: prevent iOS auto-zoom on focus ────────────
+   iOS Safari zooms the viewport when a focused input has
+   font-size under 16px — this keeps the layout stable */
+@media (max-width: 767px) {
+
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+
+/* ─── Typography: scale down large display numbers on mobile ─ */
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .page-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-top: 24px;
+  }
+
+
+  .value-lg {
+    font-size: 1.85rem;
+  }
+}
+
+/* ─── Stat cards: tighter padding when 2-3 sit side by side ── */
+@media (max-width: 480px) {
+  .stat-card {
+    padding: 14px;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+}
+
+/* ─── Mobile "+" Action Buttons (FAB Style) ───────────────── */
+.btn-add-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+@media (max-width: 767px) {
+  .btn-add-action {
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border-radius: 50%;
+    justify-content: center;
+    /* Adds a nice subtle glow/shadow to make it pop as a FAB */
+    box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+  }
+
+  .btn-add-action span {
+    display: none;
+    /* Hides the text on mobile */
+  }
+
+  .btn-add-action svg {
+    margin: 0;
+    width: 22px;
+    height: 22px;
+  }
 }

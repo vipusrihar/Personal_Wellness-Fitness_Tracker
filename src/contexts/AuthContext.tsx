@@ -21,17 +21,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [isOnline, setIsOnline] = useState(navigator.onLine)
 
     useEffect(() => {
-        const handleOnline = () => setIsOnline(true)
-        const handleOffline = () => setIsOnline(false)
+        const checkRealInternet = async () => {
+            if (!navigator.onLine) {
+                setIsOnline(false);
+                return;
+            }
 
-        window.addEventListener("online", handleOnline)
-        window.addEventListener("offline", handleOffline)
+            try {
+                // Ping a small, fast endpoint or public icon to verify actual traffic flow
+                // Use a cache-busting timestamp query parameter so the browser doesn't fake a success response
+                await fetch("https://www.google.com/favicon.ico", {
+                    mode: 'no-cors',
+                    cache: 'no-store'
+                });
+                setIsOnline(true);
+            } catch (error) {
+                setIsOnline(false); // Connected to Wi-Fi, but no real internet throughput!
+            }
+        };
+
+        const handleOnline = () => checkRealInternet();
+        const handleOffline = () => setIsOnline(false);
+
+        window.addEventListener("online", handleOnline);
+        window.addEventListener("offline", handleOffline);
+
+        // Run an initial check on mount
+        checkRealInternet();
 
         return () => {
-            window.removeEventListener("online", handleOnline)
-            window.removeEventListener("offline", handleOffline)
-        }
-    }, [])
+            window.removeEventListener("online", handleOnline);
+            window.removeEventListener("offline", handleOffline);
+        };
+    }, []);
 
     const login = useCallback(async (username: string, password: string): Promise<User> => {
         const u = await userService.login(username, password)

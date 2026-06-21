@@ -6,6 +6,7 @@ import { useAchievement } from '../contexts/AchievementContext';
 import { workoutService } from '../services/workoutService';
 import { apiService } from '../services/apiService';
 import { CountdownTimer, Stopwatch } from '../components/Timers';
+import { FiPlus } from 'react-icons/fi';
 
 const CATEGORIES = ['Strength', 'Cardio', 'Core', 'Flexibility', 'Sports', 'Other'] as const;
 
@@ -37,7 +38,7 @@ export default function Workouts() {
   const { user } = useAuth() as { user: any };
   const { addToast } = useToast();
   const { unlockAchievement } = useAchievement();
-  
+
   const [entries, setEntries] = useState<WorkoutEntry[]>([])
   const [showForm, setShowForm] = useState<boolean>(false)
   const [form, setForm] = useState<FormState>({ exercise: '', sets: '', reps: '', duration: '', category: 'Strength' })
@@ -53,7 +54,7 @@ export default function Workouts() {
   }
 
   useEffect(() => { load() }, [user])
-  
+
   useEffect(() => {
     apiService.getExercises(exSearch).then((res: any) => {
       setExerciseSuggestions(res ?? [])
@@ -74,19 +75,19 @@ export default function Workouts() {
     ev.preventDefault()
     const errs = validate()
     if (Object.keys(errs).length) { setErrors(errs); return }
-    
+
     await workoutService.add(user.id, {
-      exercise: form.exercise, 
+      exercise: form.exercise,
       category: form.category,
       sets: form.sets ? +form.sets : null,
       reps: form.reps ? +form.reps : null,
       duration: form.duration ? +form.duration : null
     })
-    
+
     addToast('Workout logged! 💪', 'success')
     await unlockAchievement('first_workout') // Fixed signature to context layer structure
     setForm({ exercise: '', sets: '', reps: '', duration: '', category: 'Strength' })
-    setErrors({}); 
+    setErrors({});
     setShowForm(false)
     load()
   }
@@ -96,9 +97,9 @@ export default function Workouts() {
     load()
   }
 
-  const handleSetChange = (k: keyof FormState) => (ev: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => { 
-    setForm(f => ({ ...f, [k]: ev.target.value })); 
-    setErrors(er => ({ ...er, [k]: '' })) 
+  const handleSetChange = (k: keyof FormState) => (ev: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setForm(f => ({ ...f, [k]: ev.target.value }));
+    setErrors(er => ({ ...er, [k]: '' }))
   }
 
   const today = new Date().toISOString().split('T')[0]
@@ -111,7 +112,10 @@ export default function Workouts() {
           <h1 className="page-title">Workouts</h1>
           <p className="page-subtitle">{todayWorkouts.length} exercises today</p>
         </div>
-        <button className="btn btn-primary btn-sm" onClick={() => setShowForm(true)}>+ Add Workout</button>
+        <button className="btn btn-primary btn-sm btn-add-action" onClick={() => setShowForm(true)}>
+          <FiPlus size={20} />
+          <span>Add Workout</span>
+        </button>
       </div>
 
       {/* Timers */}

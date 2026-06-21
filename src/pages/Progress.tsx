@@ -6,6 +6,7 @@ import { useToast } from '../contexts/ToastContext'
 import { measurementService } from '../services/measurement'
 import { calorieService } from '../services/calorieService'
 import { workoutService } from '../services/workoutService'
+import { FiPlus } from 'react-icons/fi'
 
 // Interfaces for structured TypeScript support
 interface Measurement {
@@ -36,7 +37,7 @@ type TabType = 'weight' | 'calories' | 'workouts';
 export default function Progress() {
   const { user } = useAuth() as { user: any };
   const { addToast } = useToast();
-  
+
   const [measurements, setMeasurements] = useState<Measurement[]>([])
   const [calorieHistory, setCalorieHistory] = useState<ChartData[]>([])
   const [workoutHistory, setWorkoutHistory] = useState<ChartData[]>([])
@@ -52,7 +53,7 @@ export default function Progress() {
       workoutService.getAll(user.id)
     ])
     setMeasurements(m)
-    
+
     // Aggregate calories by day (last 14 days)
     const calMap: Record<string, number> = {}
     c.forEach((entry: any) => {
@@ -60,7 +61,7 @@ export default function Progress() {
       if (day) calMap[day] = (calMap[day] || 0) + entry.calories
     })
     setCalorieHistory(Object.entries(calMap).slice(-14).map(([date, cals]) => ({ date: fmtDate(date), cals })))
-    
+
     // Workouts per day
     const workMap: Record<string, number> = {}
     w.forEach((entry: any) => {
@@ -79,7 +80,7 @@ export default function Progress() {
     if (form.chest) data.chest = +form.chest
     if (form.waist) data.waist = +form.waist
     if (form.arms) data.arms = +form.arms
-    
+
     if (!Object.keys(data).length) return
     await measurementService.add(user.id, data)
     addToast('Measurements saved! 📏', 'success')
@@ -88,9 +89,9 @@ export default function Progress() {
     load()
   }
 
-  const handleDelete = async (id: number) => { 
+  const handleDelete = async (id: number) => {
     await measurementService.delete(id)
-    load() 
+    load()
   }
 
   const weightData: ChartData[] = measurements
@@ -98,10 +99,10 @@ export default function Progress() {
     .map(m => ({ date: fmtDate(m.timestamp?.split('T')[0]), weight: m.weight }))
 
   const tooltipStyle = {
-    background: 'var(--bg-elevated)', 
+    background: 'var(--bg-elevated)',
     border: '1px solid var(--border)',
-    borderRadius: 8, 
-    color: 'var(--text-primary)', 
+    borderRadius: 8,
+    color: 'var(--text-primary)',
     fontSize: '0.85rem'
   }
 
@@ -112,7 +113,10 @@ export default function Progress() {
           <h1 className="page-title">Progress</h1>
           <p className="page-subtitle">Track your body & fitness journey</p>
         </div>
-        <button className="btn btn-primary btn-sm" onClick={() => setShowForm(true)}>+ Add Measurements</button>
+        <button className="btn btn-primary btn-sm btn-add-action" onClick={() => setShowForm(true)}>
+          <FiPlus size={20} />
+          <span>Add Measurements</span>
+        </button>
       </div>
 
       {/* Chart tabs */}
