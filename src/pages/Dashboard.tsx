@@ -18,6 +18,7 @@ import {
 import { GiWeightLiftingUp } from 'react-icons/gi'
 import { MdLocalFireDepartment } from 'react-icons/md'
 import type { Calorie } from '../types/Calorie'
+import { FaArrowRight } from 'react-icons/fa'
 
 interface HydrationItem {
     id: string | number
@@ -134,7 +135,7 @@ export default function Dashboard() {
                         <div className="ring-label">Calories</div>
                         <div className="ring-value">{totalCalories} <span>/ {calorieGoal}</span></div>
                         <Link to="/calories" className="ring-link">
-                            Add meal →
+                            Add meal <FaArrowRight />
                         </Link>
                     </div>
                 </div>
@@ -152,7 +153,7 @@ export default function Dashboard() {
                         <div className="ring-label">Hydration</div>
                         <div className="ring-value">{totalWater}ml <span>/ {waterGoal}ml</span></div>
                         <Link to="/hydration" className="ring-link">
-                            Add water →
+                            Add water <FaArrowRight />
                         </Link>
                     </div>
                 </div>
@@ -170,7 +171,7 @@ export default function Dashboard() {
                         <div className="ring-label">Workouts</div>
                         <div className="ring-value">{workouts.length} <span>today</span></div>
                         <Link to="/workouts" className="ring-link">
-                            Log workout →
+                            Log workout <FaArrowRight />
                         </Link>
                     </div>
                 </div>

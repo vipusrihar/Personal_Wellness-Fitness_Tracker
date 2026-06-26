@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { useToast } from '../contexts/ToastContext'
 import '../styles/Auth.css'
+import { FaBolt, FaArrowLeft, FaArrowRight, FaUserCheck, FaUserPlus } from 'react-icons/fa'
 
 interface AuthProps {
     mode?: 'login' | 'register'
@@ -19,11 +20,11 @@ export default function Auth({ mode = 'login' }: AuthProps) {
     const [form, setForm] = useState({ username: '', password: '', email: '' })
     const [errors, setErrors] = useState<FormErrors>({})
     const [loading, setLoading] = useState(false)
-    
+
     // Consume decoupled atomic contexts instead of the old useApp()
     const { login, register } = useAuth()
     const { addToast } = useToast()
-    
+
     const navigate = useNavigate()
     const isLogin = mode === 'login'
 
@@ -31,10 +32,10 @@ export default function Auth({ mode = 'login' }: AuthProps) {
         const e: FormErrors = {}
         if (!form.username.trim()) e.username = 'Username is required'
         else if (form.username.length < 3) e.username = 'Must be at least 3 characters'
-        
+
         if (!form.password) e.password = 'Password is required'
         else if (form.password.length < 6) e.password = 'Must be at least 6 characters'
-        
+
         if (!isLogin) {
             if (!form.email.trim()) e.email = 'Email is required'
             else if (!/\S+@\S+\.\S+/.test(form.email)) e.email = 'Invalid email'
@@ -50,10 +51,25 @@ export default function Auth({ mode = 'login' }: AuthProps) {
         try {
             if (isLogin) {
                 await login(form.username, form.password)
+                
+                // Integrated the React Icon toast for Login
+                addToast(
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <FaUserCheck color="#22c55e" /> Welcome back!
+                    </span>,
+                    'success'
+                )
             } else {
                 await register(form.username, form.password, form.email)
+                
+                // Integrated a matching React Icon toast for Registration
+                addToast(
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <FaUserPlus color="#22c55e" /> Account created successfully!
+                    </span>,
+                    'success'
+                )
             }
-            addToast(isLogin ? 'Welcome back! 👋' : 'Account created! 🎉', 'success')
             navigate('/dashboard')
         } catch (err: any) {
             setErrors({ general: err.message || 'An unexpected error occurred' })
@@ -62,19 +78,21 @@ export default function Auth({ mode = 'login' }: AuthProps) {
         }
     }
 
-    const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => { 
-        setForm(f => ({ ...f, [k]: e.target.value })); 
-        setErrors(er => ({ ...er, [k]: '' })) 
+    const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => {
+        setForm(f => ({ ...f, [k]: e.target.value }));
+        setErrors(er => ({ ...er, [k]: '' }))
     }
 
     return (
         <div className="auth-page">
             <div className="bg-mesh" />
-            <Link to="/" className="auth-back">← Back to home</Link>
+            <Link to="/" className="auth-back">
+                <FaArrowLeft style={{ marginRight: '8px', display: 'inline-block', verticalAlign: 'middle' }} />Back to home
+            </Link>
 
             <div className="auth-container fade-in">
                 <div className="auth-logo">
-                    <span>⚡</span>
+                    <FaBolt style={{ color: '#eab308', marginRight: '6px' }} />
                     <span>FitTrack <strong>Pro</strong></span>
                 </div>
 
@@ -102,7 +120,11 @@ export default function Auth({ mode = 'login' }: AuthProps) {
                         {errors.password && <span className="form-error">{errors.password}</span>}
                     </div>
                     <button type="submit" className="btn btn-primary btn-full mt-3" disabled={loading}>
-                        {loading ? 'Please wait…' : isLogin ? 'Sign In →' : 'Create Account →'}
+                        {loading ? 'Please wait…' : (
+                            <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                                {isLogin ? 'Sign In' : 'Create Account'} <FaArrowRight />
+                            </span>
+                        )}
                     </button>
                 </form>
 

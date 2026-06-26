@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import '../styles/Settings.css'
 import {
-  FiSun, FiMoon, FiDownload, FiTrash2, FiSettings,
+  FiSun, FiMoon, FiDownload, FiTrash2, 
   FiWifi, FiDatabase, FiInfo
 } from 'react-icons/fi'
 import { exportData, resetData } from '../services/dataService'
@@ -60,10 +60,9 @@ export default function Settings() {
       {/* Header Block */}
       <div>
         <div className="flex items-center gap-2 mb-1">
-          <FiSettings className="text-xl" />
           <h1 className="page-title" style={{ margin: 0 }}>Settings</h1>
         </div>
-        <p className="page-subtitle">Customize your FitTrack Pro experience</p>
+        <p className="page-subtitle">Customize your FitTrack experience</p>
       </div>
 
       {/* Appearance */}
@@ -100,7 +99,7 @@ export default function Settings() {
         <div className="settings-row mt-3">
           <div>
             <div className="settings-label">Offline Mode</div>
-            <div className="settings-desc">FitTrack Pro works fully offline. All data is stored locally on your device.</div>
+            <div className="settings-desc">FitTrack works fully offline. All data is stored locally on your device.</div>
           </div>
           <span className="chip chip-blue">Active</span>
         </div>
