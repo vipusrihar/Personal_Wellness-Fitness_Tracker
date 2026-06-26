@@ -13,9 +13,9 @@ export default defineConfig({
         cleanupOutdatedCaches: true,
       },
       manifest: {
-        name: 'Clinic Management System',
+        name: 'FitTrack',
         short_name: 'ClinicApp',
-        description: 'Offline-capable Clinic Management System',
+        description: 'Offline-capable FitTrack',
         theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',
