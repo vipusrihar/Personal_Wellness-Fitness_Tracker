@@ -14,7 +14,7 @@ export default defineConfig({
       },
       manifest: {
         name: 'FitTrack',
-        short_name: 'ClinicApp',
+        short_name: 'FitTrack',
         description: 'Offline-capable FitTrack',
         theme_color: '#ffffff',
         background_color: '#ffffff',
