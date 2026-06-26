@@ -6,7 +6,10 @@ import { useAchievement } from '../contexts/AchievementContext'
 import { calorieService } from '../services/calorieService'
 import { useAuth } from '../contexts/AuthContext'
 import { useUserProfile } from '../contexts/UserProfileContext'
-import { FiPlus, FiSearch, FiEdit2, FiTrash2, FiCoffee, FiSun, FiMoon, FiZap, FiTarget, FiTrendingUp, FiGrid, } from 'react-icons/fi'
+import {
+  FiPlus, FiSearch, FiEdit2, FiTrash2, FiCoffee, FiSun, FiMoon, FiZap, FiTarget, FiTrendingUp,
+  FiGrid, FiClock, FiCheck, FiX
+} from 'react-icons/fi'
 import type { Calorie } from '../types/Calorie'
 
 const CATEGORIES = ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Drink', 'Other'] as const;
@@ -83,7 +86,7 @@ export default function Calories() {
         addToast('Meal updated ✓', 'success');
       } else {
         await calorieService.add(user.id, form.meal, form.category, +form.calories);
-        addToast('Meal logged! 🥗', 'success');
+        addToast('Meal logged!', 'success');
         await unlockAchievement('first_meal');
       }
       setForm({ meal: '', category: 'Breakfast', calories: '' });
@@ -174,7 +177,10 @@ export default function Calories() {
           </div>
         </div>
         <ProgressBar value={total} max={goal} color={total > goal ? 'var(--accent-4)' : 'var(--gradient-3)'} height={10} />
-        <div className="mt-2 text-sm text-muted">{todayEntries.length} meals today · {Math.round((total / goal) * 100)}% of goal</div>
+        <div className="mt-2 text-sm text-muted" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <FiClock size={14} />
+          <span>{todayEntries.length} meals today · {Math.round((total / goal) * 100)}% of goal</span>
+        </div>
       </div>
 
       {/* Filters */}
@@ -196,7 +202,16 @@ export default function Calories() {
         </div>
         <div className="cat-chips">
           {['All', ...CATEGORIES].map(c => (
-            <button key={c} className={`chip ${filterCat === c ? 'chip-amber' : ''}`} onClick={() => setFilterCat(c)}>{c}</button>
+            <button
+              key={c}
+              className={`chip ${filterCat === c ? 'chip-amber' : ''}`}
+              onClick={() => setFilterCat(c)}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+            >
+              {filterCat === c && <FiCheck size={12} />}
+              {getCategoryIcon(c)}
+              <span>{c}</span>
+            </button>
           ))}
         </div>
       </div>
@@ -214,14 +229,22 @@ export default function Calories() {
           {filtered.map(e => (
             <div key={e.id} className="entry-item card card-sm">
               <div className="entry-left">
-                <span className="entry-cat-icon">{catIcon(e.category)}</span>
+                <span className="entry-cat-icon">{getCategoryIcon(e.category)}</span>
                 <div>
                   <div className="entry-name">{e.meal}</div>
-                  <div className="entry-meta">{e.category} · {formatTime(e.timestamp)}</div>
+                  <div className="entry-meta" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span>{e.category}</span>
+                    <span>•</span>
+                    <FiClock size={12} />
+                    <span>{formatTime(e.timestamp)}</span>
+                  </div>
                 </div>
               </div>
               <div className="entry-right">
-                <span className="entry-cal">{e.calories} kcal</span>
+                <span className="entry-cal" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  <FiZap size={14} style={{ color: 'var(--accent-3)' }} />
+                  {e.calories} kcal
+                </span>
                 <button
                   className="btn btn-ghost btn-icon text-sm"
                   onClick={() => handleEdit(e)}
@@ -246,7 +269,10 @@ export default function Calories() {
       {showForm && (
         <div className="modal-overlay" onClick={e => { if (e.target === e.currentTarget) setShowForm(false) }}>
           <div className="modal">
-            <h2 className="modal-title">{editItem ? 'Edit Meal' : 'Add Meal'}</h2>
+            <h2 className="modal-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {editItem ? <FiEdit2 size={20} /> : <FiPlus size={20} />}
+              {editItem ? 'Edit Meal' : 'Add Meal'}
+            </h2>
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               <div className="form-group">
                 <label className="form-label">Meal Name</label>
@@ -265,8 +291,14 @@ export default function Calories() {
                 {errors.calories && <span className="form-error">{errors.calories}</span>}
               </div>
               <div className="flex gap-2 mt-2">
-                <button type="submit" className="btn btn-primary flex-1">{editItem ? 'Update' : 'Add Meal'}</button>
-                <button type="button" className="btn btn-secondary" onClick={() => { setShowForm(false); setEditItem(null) }}>Cancel</button>
+                <button type="submit" className="btn btn-primary flex-1" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                  <FiCheck size={16} />
+                  <span>{editItem ? 'Update' : 'Add Meal'}</span>
+                </button>
+                <button type="button" className="btn btn-secondary" onClick={() => { setShowForm(false); setEditItem(null) }} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                  <FiX size={16} />
+                  <span>Cancel</span>
+                </button>
               </div>
             </form>
           </div>
@@ -276,17 +308,19 @@ export default function Calories() {
   )
 }
 
-function catIcon(cat: string) {
+// Normalized single icon provider helper for chips, selection rows, and item grids
+function getCategoryIcon(cat: string) {
   const icons: Record<string, React.ReactNode> = {
-    Breakfast: <FiSun size={18} />,
-    Lunch: <FiSun size={18} />,
-    Dinner: <FiMoon size={18} />,
-    Snack: <FiZap size={18} />,
-    Drink: <FiCoffee size={18} />,
-    Other: <FiGrid size={18} />,
+    All: <FiGrid size={14} />,
+    Breakfast: <FiSun size={14} />,
+    Lunch: <FiSun size={14} />,
+    Dinner: <FiMoon size={14} />,
+    Snack: <FiZap size={14} />,
+    Drink: <FiCoffee size={14} />,
+    Other: <FiGrid size={14} />,
   };
 
-  return icons[cat] || <FiGrid size={18} />;
+  return icons[cat] || <FiGrid size={14} />;
 }
 
 function formatTime(ts?: string): string {

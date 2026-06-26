@@ -7,6 +7,7 @@ import { useUserProfile } from '../contexts/UserProfileContext';
 import { hydrationService } from '../services/hydrationService';
 import ProgressRing from '../components/ProgressiveRing';
 import { MdWaterDrop } from 'react-icons/md';
+import { FiTrash2, FiPlus, FiTarget, FiActivity, FiClock } from 'react-icons/fi';
 
 // Interface for individual water logs
 interface HydrationEntry {
@@ -18,13 +19,11 @@ interface HydrationEntry {
 const QUICK_AMOUNTS = [150, 250, 350, 500, 750]
 
 export default function Hydration() {
-  // Corrected the type assignment for destructured custom hooks
-  const { user } = useAuth() as { user: any }; // Replace 'any' with your actual User type if not handled inside the hook
+  const { user } = useAuth() as { user: any }; 
   const { profile } = useUserProfile();
   const { addToast } = useToast();
   const { unlockAchievement } = useAchievement()
 
-  // Explicitly typed state array to avoid implicit 'never[]'
   const [entries, setEntries] = useState<HydrationEntry[]>([])
   const [custom, setCustom] = useState<string>('')
   const [error, setError] = useState<string>('')
@@ -50,7 +49,7 @@ export default function Hydration() {
     await hydrationService.add(user.id, +amount)
     addToast(
       <span className="flex items-center gap-1">
-        +{amount}ml logged! <MdWaterDrop />
+        +{amount}ml logged! <MdWaterDrop style={{ color: '#3182ce' }} />
       </span>,
       'success'
     );
@@ -73,30 +72,38 @@ export default function Hydration() {
 
       {/* Big ring */}
       <div className="hydration-hero card">
-        <ProgressRing size={180} strokeWidth={14} percent={pct} color="#63b3ed">
-          <div className="text-center">
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem', fontWeight: 700 }}>{total}</div>
+        <ProgressRing size={180} strokeWidth={14} percent={pct} color="#3182ce">
+          <div className="text-center" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <MdWaterDrop size={28} style={{ color: '#3182ce', marginBottom: '4px' }} />
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.8rem', fontWeight: 700, lineHeight: 1 }}>{total}</div>
             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>ml</div>
           </div>
         </ProgressRing>
+        
         <div className="hydration-stats">
           <div className="h-stat">
-            <span className="label">Consumed</span>
-            <span className="h-val" style={{ color: 'var(--accent-1)' }}>{total}ml</span>
+            <span className="label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <FiActivity size={14} /> Consumed
+            </span>
+            <span className="h-val" style={{ color: '#3182ce' }}>{total}ml</span>
           </div>
           <div className="h-stat">
-            <span className="label">Goal</span>
+            <span className="label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <FiTarget size={14} /> Goal
+            </span>
             <span className="h-val">{goal}ml</span>
           </div>
           <div className="h-stat">
-            <span className="label">Remaining</span>
+            <span className="label" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <FiClock size={14} /> Remaining
+            </span>
             <span className="h-val" style={{ color: total >= goal ? 'var(--accent-2)' : 'var(--text-primary)' }}>
               {total >= goal ? 'Goal Met! 🎉' : `${goal - total}ml`}
             </span>
           </div>
           <div className="h-pct-bar">
             <div style={{ height: 6, background: 'var(--bg-surface)', borderRadius: 3, overflow: 'hidden' }}>
-              <div style={{ height: '100%', width: `${pct}%`, background: 'var(--accent-1)', borderRadius: 3, transition: 'width 0.8s', boxShadow: '0 0 12px rgba(99,179,237,0.5)' }} />
+              <div style={{ height: '100%', width: `${pct}%`, background: '#3182ce', borderRadius: 3, transition: 'width 0.8s', boxShadow: '0 0 12px rgba(49,130,206,0.5)' }} />
             </div>
             <div className="text-sm text-muted mt-2">{Math.round(pct)}% of daily goal</div>
           </div>
@@ -105,22 +112,28 @@ export default function Hydration() {
 
       {/* Quick add */}
       <div className="card mt-4">
-        <div className="section-title">Quick Add</div>
+        <div className="section-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+          <FiPlus size={16} />
+          <span>Quick Add</span>
+        </div>
         <div className="quick-buttons">
           {QUICK_AMOUNTS.map(a => (
-            <button key={a} className="quick-btn btn btn-secondary" onClick={() => addWater(a)}>
-              <MdWaterDrop /> {a}ml
+            <button key={a} className="quick-btn btn btn-secondary" onClick={() => addWater(a)} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+              <MdWaterDrop style={{ color: '#3182ce' }} /> {a}ml
             </button>
           ))}
         </div>
-        <div className="custom-add mt-3">
+        <div className="custom-add mt-3" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <input
             type="number" placeholder="Custom amount (ml)"
             value={custom} onChange={e => { setCustom(e.target.value); setError('') }}
             min="1" max="5000"
             style={{ maxWidth: 200 }}
           />
-          <button className="btn btn-primary btn-sm" onClick={() => addWater(+custom)}>Add</button>
+          <button className="btn btn-primary btn-sm" onClick={() => addWater(+custom)} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+            <FiPlus size={14} />
+            <span>Add</span>
+          </button>
         </div>
         {error && <span className="form-error mt-2">{error}</span>}
       </div>
@@ -128,16 +141,31 @@ export default function Hydration() {
       {/* Today's log */}
       {entries.length > 0 && (
         <div className="card mt-4">
-          <div className="section-title">Today's Log</div>
+          <div className="section-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+            <FiClock size={16} />
+            <span>Today's Log</span>
+          </div>
           <div className="water-log">
             {entries.slice().reverse().map(e => (
-              <div key={e.id} className="water-entry">
-                <div className="water-icon"><MdWaterDrop /></div>
+              <div key={e.id} className="water-entry" style={{ display: 'flex', alignItems: 'center', padding: '8px 0', borderBottom: '1px solid var(--border-color, #e2e8f0)' }}>
+                <div className="water-icon" style={{ marginRight: '12px', display: 'flex', alignItems: 'center' }}>
+                  <MdWaterDrop size={20} style={{ color: '#3182ce' }} />
+                </div>
                 <div>
                   <div style={{ fontWeight: 500 }}>{e.amount}ml</div>
-                  <div className="text-muted text-sm">{new Date(e.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</div>
+                  <div className="text-muted text-sm" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <FiClock size={12} />
+                    <span>{new Date(e.timestamp).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</span>
+                  </div>
                 </div>
-                <button className="btn btn-ghost btn-icon text-sm ml-auto" onClick={() => handleDelete(e.id)}>🗑️</button>
+                <button 
+                  className="btn btn-ghost btn-icon text-sm ml-auto" 
+                  onClick={() => handleDelete(e.id)}
+                  title="Delete log"
+                  style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+                >
+                  <FiTrash2 size={16} />
+                </button>
               </div>
             ))}
           </div>
