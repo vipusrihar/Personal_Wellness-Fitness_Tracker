@@ -94,11 +94,14 @@ export default function Dashboard() {
         <div className="page-container dashboard fade-in">
             <div className="dashboard-header">
                 <div>
-                    <h1 className="page-title">
+                    <h1 >
                         Good {getGreeting()},
-                        <span className="greeting-name"> {user?.username || 'Guest'} <span className="greeting-icon">
-                            {getGreetingIcon()}
-                        </span></span>
+                        <span className="greeting-name">
+                            {user?.username || 'Guest'}
+                            <span className="greeting-icon">
+                                {getGreetingIcon()}
+                            </span>
+                        </span>
                     </h1>
                     <p className="page-subtitle">
                         {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
@@ -123,14 +126,16 @@ export default function Dashboard() {
             {/* Summary rings */}
             <div className="rings-row">
                 <div className="ring-card card">
-                    <ProgressRing size={100} strokeWidth={9} percent={calPct} color="var(--accent-3)">
-                        <div className="ring-inner">
-                            <div className="ring-inner-value">
-                                {Math.round(calPct)}%
+                    <div className="ring-visual">
+                        <ProgressRing size={100} strokeWidth={9} percent={calPct} color="var(--accent-3)">
+                            <div className="ring-inner">
+                                <div className="ring-inner-value">
+                                    {Math.round(calPct)}%
+                                </div>
+                                <div className="ring-inner-unit">CALS</div>
                             </div>
-                            <div className="ring-inner-unit"> CALS  </div>
-                        </div>
-                    </ProgressRing>
+                        </ProgressRing>
+                    </div>
                     <div className="ring-info">
                         <div className="ring-label">Calories</div>
                         <div className="ring-value">{totalCalories} <span>/ {calorieGoal}</span></div>
@@ -141,14 +146,16 @@ export default function Dashboard() {
                 </div>
 
                 <div className="ring-card card">
-                    <ProgressRing size={100} strokeWidth={9} percent={waterPct} color="var(--accent-2)">
-                        <div className="ring-inner">
-                            <div className="ring-inner-value">
-                                {Math.round(waterPct)}%
+                    <div className="ring-visual">
+                        <ProgressRing size={100} strokeWidth={9} percent={waterPct} color="var(--accent-2)">
+                            <div className="ring-inner">
+                                <div className="ring-inner-value">
+                                    {Math.round(waterPct)}%
+                                </div>
+                                <div className="ring-inner-unit">H₂O</div>
                             </div>
-                            <div className="ring-inner-unit">H₂O</div>
-                        </div>
-                    </ProgressRing>
+                        </ProgressRing>
+                    </div>
                     <div className="ring-info">
                         <div className="ring-label">Hydration</div>
                         <div className="ring-value">{totalWater}ml <span>/ {waterGoal}ml</span></div>
@@ -159,14 +166,16 @@ export default function Dashboard() {
                 </div>
 
                 <div className="ring-card card">
-                    <ProgressRing size={100} strokeWidth={9} percent={Math.min(100, (workouts.length / 3) * 100)} color="var(--accent-1)">
-                        <div className="ring-inner">
-                            <div className="ring-inner-value ring-inner-value-lg">
-                                {workouts.length}
+                    <div className="ring-visual">
+                        <ProgressRing size={100} strokeWidth={9} percent={Math.min(100, (workouts.length / 3) * 100)} color="var(--accent-1)">
+                            <div className="ring-inner">
+                                <div className="ring-inner-value ring-inner-value-lg">
+                                    {workouts.length}
+                                </div>
+                                <div className="ring-inner-unit">SETS</div>
                             </div>
-                            <div className="ring-inner-unit">SETS</div>
-                        </div>
-                    </ProgressRing>
+                        </ProgressRing>
+                    </div>
                     <div className="ring-info">
                         <div className="ring-label">Workouts</div>
                         <div className="ring-value">{workouts.length} <span>today</span></div>
