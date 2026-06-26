@@ -207,6 +207,7 @@ export default function Home() {
             <canvas ref={canvasRef} className="bg-canvas" />
 
             {/* NAV */}
+            {/* NAV */}
             <nav className="home-nav">
                 <div className="logo">
                     <div className="logo-dot" />
