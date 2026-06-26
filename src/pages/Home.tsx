@@ -196,12 +196,16 @@ export default function Home() {
         return () => clearTimeout(timeout)
     }, [])
 
+    // FIX: smooth-scroll handler for the "View features" button
+    const scrollToFeatures = () => {
+        document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' })
+    }
+
     return (
         <div className="home-page">
             {/* Animated canvas background */}
             <canvas ref={canvasRef} className="bg-canvas" />
 
-            {/* NAV */}
             {/* NAV */}
             <nav className="home-nav">
                 <div className="logo">
@@ -459,7 +463,10 @@ export default function Home() {
                         </p>
                         <div className="cta-btns">
                             <Link to="/register" className="btn-primary-lg">Create account →</Link>
-                            <Link to="#features" className="btn-outline-lg">View features</Link>
+                            {/* FIX: was <Link to="#features"> which React Router doesn't scroll — replaced with scrollIntoView */}
+                            <button className="btn-outline-lg" onClick={scrollToFeatures}>
+                                View features
+                            </button>
                         </div>
                     </div>
                 </div>
