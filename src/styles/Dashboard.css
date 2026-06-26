@@ -436,3 +436,48 @@
         align-items: flex-start;
     }
 }
+
+
+@media (max-width: 480px) {
+    .greeting-name {
+        display: inline;
+        /* Prevents awkward line-breaks right after the comma on mobile */
+    }
+
+    .page-subtitle {
+        margin-top: 2px;
+    }
+}
+
+
+@media (max-width: 900px) {
+    .rings-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .rings-row>.ring-card:last-child:nth-child(odd) {
+        grid-column: 1 / -1;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .rings-row {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .ring-card {
+        flex-direction: row;
+        /* Maintains the clean layout side-by-side style on mobile */
+        align-items: center;
+    }
+}
+
+@media (max-width: 380px) {
+    .ring-card {
+        flex-direction: column;
+        /* Graceful fallback only for extremely narrow screens */
+        align-items: center;
+        text-align: center;
+    }
+}
