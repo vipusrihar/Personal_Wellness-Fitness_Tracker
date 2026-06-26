@@ -20,12 +20,12 @@ interface Tip {
 }
 
 const features: Feature[] = [
-    { icon: LuUtensils, title: 'Calorie Tracking', desc: 'Log meals and monitor daily nutrition with smart auto-categorization and macro breakdown charts.' },
-    { icon: LuDroplet, title: 'Hydration Goals', desc: 'Track water intake with beautiful progress rings and one-tap quick-add buttons throughout the day.' },
-    { icon: LuDumbbell, title: 'Workout Logger', desc: 'Record exercises with a built-in stopwatch, rest timer, and set-by-set volume tracking per muscle group.' },
-    { icon: MdOutlineInsertChartOutlined, title: 'Progress Analytics', desc: 'Visualize your journey with detailed trend charts, weekly summaries, and personal record tracking.' },
-    { icon: LuTrophy, title: 'Achievements', desc: 'Unlock badges, maintain streaks, and celebrate milestones to stay motivated every single day.' },
-    { icon: LuCloudOff, title: 'Offline First', desc: 'Works without internet. Your private health data stays locked on your device — never uploaded.' },
+    { icon: LuUtensils, title: 'Calorie Tracking', desc: 'Log your daily meals, track macronutrient distributions, and keep an ongoing record of your nutritional intake.' },
+    { icon: LuDroplet, title: 'Hydration Goals', desc: 'Log water consumption throughout the day and check your progress against your baseline fluid targets.' },
+    { icon: LuDumbbell, title: 'Workout Logger', desc: 'Record exercise sets, weight, and repetition counts, supported by a built-in rest timer and stopwatch.' },
+    { icon: MdOutlineInsertChartOutlined, title: 'Progress Analytics', desc: 'Review your activity historical history with simple data charts, weekly metrics summaries, and personal milestones.' },
+    { icon: LuTrophy, title: 'Achievements', desc: 'Stay accountable over time by monitoring consistent active streaks and marking key fitness milestones.' },
+    { icon: LuCloudOff, title: 'Offline First', desc: 'Operates entirely without network connections. Your health logs reside locally on your device storage.' },
 ]
 
 const tips: Tip[] = [
@@ -221,7 +221,7 @@ export default function Home() {
                         {theme === 'dark' ? <FiSun size={18} /> : <FiMoon size={18} />}
                     </button>
                     <Link to="/login" className="btn-ghost-nav">Sign In</Link>
-                    <Link to="/register" className="btn-nav-cta">Get Started →</Link>
+                    <Link to="/register" className="btn-nav-cta">Sign Up</Link>
                 </div>
             </nav>
 
@@ -233,30 +233,30 @@ export default function Home() {
                         Fitness Tracker
                     </div>
                     <h1 className="hero-h">
-                        Your Health,<br />
-                        <span className="grad-text">All in One Place</span>
+                        Log Metrics,<br />
+                        <span className="grad-text">Monitor Daily Progress</span>
                     </h1>
                     <p className="hero-p">
-                        FitTrack brings together calorie counting, water intake, workout logging, and progress charts — simple, offline, and always on your device.
+                        FitTrack combines caloric logs, fluid intake counts, and exercise tracking into a local interface that works offline without tracking your data.
                     </p>
                     <div className="hero-btns">
-                        <Link to="/register" className="btn-primary-lg">Start Free Today <span>→</span></Link>
+                        <Link to="/register" className="btn-primary-lg">Get Started <span>→</span></Link>
                         <Link to="/login" className="btn-outline-lg">Sign In</Link>
                     </div>
                     <div className="hero-stats">
                         <div className="stat-item">
                             <span className="stat-num">100%</span>
-                            <span className="stat-label">Works offline</span>
+                            <span className="stat-label">Local execution</span>
                         </div>
                         <div className="stat-divider" />
                         <div className="stat-item">
                             <span className="stat-num">0</span>
-                            <span className="stat-label">No data shared</span>
+                            <span className="stat-label">External tracking</span>
                         </div>
                         <div className="stat-divider" />
                         <div className="stat-item">
                             <span className="stat-num">∞</span>
-                            <span className="stat-label">Always free</span>
+                            <span className="stat-label">Open utility</span>
                         </div>
                     </div>
                 </div>
@@ -278,7 +278,6 @@ export default function Home() {
                         </div>
                     </div>
 
-                    {/* Card 2: Hydration */}
                     <div className="float-card fc2">
                         <div className="card-lbl">💧 Hydration</div>
                         <div className="card-val">
@@ -371,21 +370,9 @@ export default function Home() {
             <section className="section">
                 <div className="photo-feature">
                     <div className="photo-collage">
-                        <img
-                            className="p-img pi1"
-                            src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80&fit=crop"
-                            alt="workout"
-                        />
-                        <img
-                            className="p-img pi2"
-                            src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&q=80&fit=crop"
-                            alt="nutrition"
-                        />
-                        <img
-                            className="p-img pi3"
-                            src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&q=80&fit=crop"
-                            alt="athlete"
-                        />
+                        <img className="p-img pi1" src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&q=80&fit=crop" alt="workout" />
+                        <img className="p-img pi2" src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&q=80&fit=crop" alt="nutrition" />
+                        <img className="p-img pi3" src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&q=80&fit=crop" alt="athlete" />
                         <div className="collage-overlay">
                             <div className="co-label">Weekly Progress</div>
                             <div className="co-value">+4.2kg muscle gained</div>
@@ -394,20 +381,19 @@ export default function Home() {
                     </div>
 
                     <div className="photo-feature-text">
-                        <p className="eyebrow">How it helps</p>
+                        <p className="eyebrow">Functional Model</p>
                         <h2 className="section-h" style={{ marginBottom: '1rem' }}>
-                            Simple by<br />design
+                            Minimalist and<br />functional
                         </h2>
                         <p className="photo-feature-desc">
-                            The app stays out of your way. Log what you did, see how
-                            you're trending, and keep going.
+                            The architecture minimizes operational friction, focusing instead on data entry accuracy and record visibility.
                         </p>
                         <div className="feature-list">
                             {[
-                                { n: '01', title: 'Logging that\'s quick', desc: 'Add meals and workouts in a few taps, without interrupting your day.' },
-                                { n: '02', title: 'Streaks that encourage', desc: 'A simple day counter to help you stay consistent without pressure.' },
-                                { n: '03', title: 'Weekly summaries', desc: 'A quick look at the week so you can spot what to change and what to keep.' },
-                                { n: '04', title: 'Stays on your device', desc: 'Everything is stored locally. Nothing leaves your phone.' },
+                                { n: '01', title: 'Streamlined Entry', desc: 'Add parameters directly from input modals without navigating nested submenus.' },
+                                { n: '02', title: 'Day Counters', desc: 'Basic consecutive entry logs designed to trace compliance and adherence.' },
+                                { n: '03', title: 'Data Summaries', desc: 'Aggregated view blocks highlighting points of divergence or stability.' },
+                                { n: '04', title: 'Local Client Storage', desc: 'Files and values persist directly on native database systems inside the browser.' },
                             ].map((item) => (
                                 <div key={item.n} className="f-item">
                                     <div className="f-num">{item.n}</div>
@@ -454,18 +440,17 @@ export default function Home() {
                 <div className="section-inner">
                     <div className="cta-wrap">
                         <div className="cta-glow" />
-                        <p className="eyebrow" style={{ position: 'relative' }}>Get started</p>
+                        <p className="eyebrow" style={{ position: 'relative' }}>Initialize</p>
                         <h2 className="cta-h">
-                            Start tracking today
+                            Access your dashboard
                         </h2>
                         <p className="cta-p">
-                            No sign-up required to get started. Your data stays on your device.
+                            No mandatory registration profiles required to test tracking structures locally.
                         </p>
                         <div className="cta-btns">
-                            <Link to="/register" className="btn-primary-lg">Create account →</Link>
-                            {/* FIX: was <Link to="#features"> which React Router doesn't scroll — replaced with scrollIntoView */}
+                            <Link to="/register" className="btn-primary-lg">Create Account →</Link>
                             <button className="btn-outline-lg" onClick={scrollToFeatures}>
-                                View features
+                                View Features
                             </button>
                         </div>
                     </div>
