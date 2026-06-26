@@ -6,20 +6,10 @@ import { useAchievement } from '../contexts/AchievementContext';
 import { workoutService } from '../services/workoutService';
 import { apiService } from '../services/apiService';
 import { CountdownTimer, Stopwatch } from '../components/Timers';
-import { FiPlus } from 'react-icons/fi';
+import { FiPlus, FiEye, FiX } from 'react-icons/fi';
+import type { Workout } from '../types/Workout';
 
 const CATEGORIES = ['Strength', 'Cardio', 'Core', 'Flexibility', 'Sports', 'Other'] as const;
-
-// Interfaces for structured component data types
-interface WorkoutEntry {
-  id: number;
-  exercise: string;
-  category: string;
-  sets: number | null;
-  reps: number | null;
-  duration: number | null;
-  timestamp?: string;
-}
 
 interface ExerciseSuggestion {
   name: string;
@@ -39,13 +29,16 @@ export default function Workouts() {
   const { addToast } = useToast();
   const { unlockAchievement } = useAchievement();
 
-  const [entries, setEntries] = useState<WorkoutEntry[]>([])
+  const [entries, setEntries] = useState<Workout[]>([])
   const [showForm, setShowForm] = useState<boolean>(false)
   const [form, setForm] = useState<FormState>({ exercise: '', sets: '', reps: '', duration: '', category: 'Strength' })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [timerTab, setTimerTab] = useState<'stopwatch' | 'countdown'>('stopwatch')
   const [exerciseSuggestions, setExerciseSuggestions] = useState<ExerciseSuggestion[]>([])
   const [exSearch, setExSearch] = useState<string>('')
+
+  // View detail state
+  const [viewEntry, setViewEntry] = useState<Workout | null>(null)
 
   const load = async () => {
     if (!user) return
@@ -85,7 +78,7 @@ export default function Workouts() {
     })
 
     addToast('Workout logged! 💪', 'success')
-    await unlockAchievement('first_workout') // Fixed signature to context layer structure
+    await unlockAchievement('first_workout')
     setForm({ exercise: '', sets: '', reps: '', duration: '', category: 'Strength' })
     setErrors({});
     setShowForm(false)
@@ -94,6 +87,8 @@ export default function Workouts() {
 
   const handleDelete = async (id: number) => {
     await workoutService.delete(id)
+    // Close view modal if the deleted entry is currently being viewed
+    if (viewEntry?.id === id) setViewEntry(null)
     load()
   }
 
@@ -142,7 +137,7 @@ export default function Workouts() {
         </div>
       </div>
 
-      {/* Today */}
+      {/* Workout List */}
       {entries.length === 0 ? (
         <div className="empty-state"><div className="empty-state-icon">💪</div><p>No workouts yet. Get moving!</p></div>
       ) : (
@@ -162,13 +157,87 @@ export default function Workouts() {
                   </div>
                 </div>
               </div>
-              <button className="btn btn-ghost btn-icon text-sm" onClick={() => handleDelete(e.id)}>🗑️</button>
+              <div className="flex items-center gap-1">
+                {/* View detail button */}
+                <button
+                  className="btn btn-ghost btn-icon text-sm"
+                  onClick={() => setViewEntry(e)}
+                  title="View details"
+                >
+                  <FiEye size={16} />
+                </button>
+                <button className="btn btn-ghost btn-icon text-sm" onClick={() => handleDelete(e.id!)}>🗑️</button>
+              </div>
             </div>
           ))}
         </div>
       )}
 
-      {/* Form Modal */}
+      {/* ── View Detail Modal ── */}
+      {viewEntry && (
+        <div className="modal-overlay" onClick={ev => { if (ev.target === ev.currentTarget) setViewEntry(null) }}>
+          <div className="modal">
+            {/* Header */}
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="modal-title" style={{ margin: 0 }}>
+                {catIcon(viewEntry.category)} Workout Detail
+              </h2>
+              <button className="btn btn-ghost btn-icon" onClick={() => setViewEntry(null)} title="Close">
+                <FiX size={20} />
+              </button>
+            </div>
+
+            {/* Detail rows */}
+            <div className="flex flex-col gap-3">
+              <div className="detail-row">
+                <span className="detail-label">Exercise</span>
+                <span className="detail-value">{viewEntry.exercise}</span>
+              </div>
+              <div className="detail-row">
+                <span className="detail-label">Category</span>
+                <span className="detail-value">{viewEntry.category}</span>
+              </div>
+              {viewEntry.sets !== null && viewEntry.sets !== undefined && (
+                <div className="detail-row">
+                  <span className="detail-label">Sets</span>
+                  <span className="detail-value">{viewEntry.sets}</span>
+                </div>
+              )}
+              {viewEntry.reps !== null && viewEntry.reps !== undefined && (
+                <div className="detail-row">
+                  <span className="detail-label">Reps</span>
+                  <span className="detail-value">{viewEntry.reps}</span>
+                </div>
+              )}
+              {viewEntry.duration !== null && viewEntry.duration !== undefined && (
+                <div className="detail-row">
+                  <span className="detail-label">Duration</span>
+                  <span className="detail-value">{viewEntry.duration} min</span>
+                </div>
+              )}
+              <div className="detail-row">
+                <span className="detail-label">Logged at</span>
+                <span className="detail-value">{formatFullDate(viewEntry.timestamp)}</span>
+              </div>
+            </div>
+
+            {/* Actions */}
+            <div className="flex gap-2 mt-4">
+              <button
+                className="btn btn-danger flex-1"
+                onClick={() => handleDelete(viewEntry.id!)}
+              >
+                🗑️ Delete
+              </button>
+              <button className="btn btn-secondary" onClick={() => setViewEntry(null)}>
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add Workout Form Modal */}
       {showForm && (
         <div className="modal-overlay" onClick={e => { if (e.target === e.currentTarget) setShowForm(false) }}>
           <div className="modal">
@@ -225,4 +294,13 @@ function formatDate(ts: string | number | Date | undefined) {
   const today = new Date()
   if (d.toDateString() === today.toDateString()) return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+}
+
+function formatFullDate(ts: string | number | Date | undefined) {
+  if (!ts) return ''
+  const d = new Date(ts)
+  return d.toLocaleString('en-US', {
+    weekday: 'short', month: 'short', day: 'numeric',
+    hour: '2-digit', minute: '2-digit'
+  })
 }
