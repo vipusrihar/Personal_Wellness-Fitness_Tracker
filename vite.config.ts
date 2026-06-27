@@ -16,6 +16,7 @@ export default defineConfig({
         name: 'FitTrack',
         short_name: 'FitTrack',
         description: 'Offline-capable FitTrack',
+
         theme_color: '#ffffff',
         background_color: '#ffffff',
         display: 'standalone',
